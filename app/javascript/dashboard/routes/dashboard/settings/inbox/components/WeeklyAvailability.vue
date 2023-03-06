@@ -5,6 +5,20 @@
       :sub-title="$t('INBOX_MGMT.BUSINESS_HOURS.SUBTITLE')"
     >
       <form @submit.prevent="updateInbox">
+        
+        <label for="toggle-business-hours" class="toggle-input-wrap">
+          <input
+            v-model="isOverCapacityEnabled"
+            type="checkbox"
+            name="toggle-business-hours"
+          />
+          {{ $t('INBOX_MGMT.BUSINESS_HOURS.TOGGLE_OVERCAPACITY') }}
+        </label>
+        <label class="unavailable-input-wrap">
+          {{ $t('INBOX_MGMT.BUSINESS_HOURS.OVERCAPACITY_MESSAGE_LABEL') }}
+          <textarea v-model="overcapacityMessage" type="text" />
+        </label>
+
         <label for="toggle-business-hours" class="toggle-input-wrap">
           <input
             v-model="isBusinessHoursEnabled"
@@ -90,8 +104,12 @@ export default {
   data() {
     return {
       isBusinessHoursEnabled: false,
+      isOverCapacityEnabled: false,
       unavailableMessage: this.$t(
         'INBOX_MGMT.BUSINESS_HOURS.UNAVAILABLE_MESSAGE_DEFAULT'
+      ),
+      overcapacityMessage: this.$t(
+        'INBOX_MGMT.BUSINESS_HOURS.OVERCAPACITY_MESSAGE_DEFAULT'
       ),
       timeZone: DEFAULT_TIMEZONE,
       dayNames: {

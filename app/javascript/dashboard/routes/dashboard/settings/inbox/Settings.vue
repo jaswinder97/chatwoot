@@ -24,6 +24,19 @@
         :title="$t('INBOX_MGMT.SETTINGS_POPUP.INBOX_UPDATE_TITLE')"
         :sub-title="$t('INBOX_MGMT.SETTINGS_POPUP.INBOX_UPDATE_SUB_TEXT')"
       >
+
+       <label
+          for="capacity"
+          class="toggle-input-wrap"
+        >
+          Capacity
+          <input
+            v-model="capacity"
+            type="text"
+            name="capacity"
+          />
+        </label> 
+
         <woot-avatar-uploader
           :label="$t('INBOX_MGMT.ADD.WEBSITE_CHANNEL.CHANNEL_AVATAR.LABEL')"
           :src="avatarUrl"
@@ -400,6 +413,7 @@ export default {
       avatarUrl: '',
       greetingEnabled: true,
       tweetsEnabled: true,
+      capacity: 0,
       greetingMessage: '',
       emailCollectEnabled: false,
       csatSurveyEnabled: false,
@@ -581,6 +595,7 @@ export default {
       this.$store.dispatch('labels/get');
       this.$store.dispatch('inboxes/get').then(() => {
         this.avatarUrl = this.inbox.avatar_url;
+        this.capacity = this.inbox.capacity;
         this.selectedInboxName = this.inbox.name;
         this.webhookUrl = this.inbox.webhook_url;
         this.greetingEnabled = this.inbox.greeting_enabled || false;
@@ -603,6 +618,7 @@ export default {
         const payload = {
           id: this.currentInboxId,
           name: this.selectedInboxName,
+          capacity: this.capacity,
           enable_email_collect: this.emailCollectEnabled,
           csat_survey_enabled: this.csatSurveyEnabled,
           allow_messages_after_resolved: this.allowMessagesAfterResolved,
